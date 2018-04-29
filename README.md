@@ -1,6 +1,6 @@
 # motivational_quote_app
 
-A new Flutter project.
+Motivational Quote App for beginners to learn basics things. You can find tutorials here: https://slcoderlk.blogspot.com/2018/04/motivational-quote-app-add-background.html
 
 ## Getting Started
 
