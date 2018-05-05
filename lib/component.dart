@@ -62,3 +62,45 @@ class FrostedGlass extends StatelessWidget {
     );
   }
 }
+
+class ComponentRow extends StatelessWidget {
+  final String quote;
+  final String personName;
+
+  ComponentRow(this.quote, this.personName);
+
+  Widget customButton(IconData icon) {
+    return new Material(
+      type: MaterialType.circle,
+      color: Colors.black26,
+      child: new InkWell(
+        child: new Container(
+          width: 50.0,
+          height: 50.0,
+          child: new Icon(
+            icon,
+            color: Colors.black54,
+            size: 40.0,
+          ),
+        ),
+        onTap: () => print('Hello'),
+        splashColor: Colors.black45,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: <Widget>[
+        customButton(Icons.arrow_left),
+        new FrostedGlass(
+          quote,
+          personName: personName,
+        ),
+        customButton(Icons.arrow_right),
+      ],
+    );
+  }
+}
