@@ -66,10 +66,36 @@ class FrostedGlass extends StatelessWidget {
 class ComponentRow extends StatelessWidget {
   final String quote;
   final String personName;
+  final Widget route;
 
-  ComponentRow(this.quote, this.personName);
+  ComponentRow(this.quote, this.personName, {this.route});
 
-  Widget customButton(IconData icon) {
+  void navigateTo(BuildContext context, int codePoint) {
+    if(codePoint == 58847) {
+      if(route != null)
+        Navigator.push(context, PageRouteBuilder<Widget>(
+          transitionDuration: Duration(milliseconds: 200),
+          pageBuilder: (context, _, __) => route,
+          transitionsBuilder: (_, Animation<double> animation, __, Widget child) {
+            return FadeTransition(
+              opacity: animation,
+              child: SlideTransition(
+                position: Tween<Offset> (
+                  begin: Offset(-1.0, 0.0),
+                  end: Offset.zero,
+                ).animate(animation),
+                child: child,
+              ),
+            );
+          }
+        ));
+    } else {
+      if(Navigator.canPop(context))
+        Navigator.pop(context);
+    }
+  }
+
+  Widget customButton(IconData icon, BuildContext context) {
     return new Material(
       type: MaterialType.circle,
       color: Colors.black26,
@@ -83,7 +109,7 @@ class ComponentRow extends StatelessWidget {
             size: 40.0,
           ),
         ),
-        onTap: () => print('Hello'),
+        onTap: () => navigateTo(context, icon.codePoint),
         splashColor: Colors.black45,
       ),
     );
@@ -94,12 +120,12 @@ class ComponentRow extends StatelessWidget {
     return new Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        customButton(Icons.arrow_left),
-        new FrostedGlass(
+        customButton(Icons.arrow_left, context),
+        FrostedGlass(
           quote,
           personName: personName,
         ),
-        customButton(Icons.arrow_right),
+        customButton(Icons.arrow_right, context),
       ],
     );
   }
